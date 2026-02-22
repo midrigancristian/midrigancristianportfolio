@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV — MIDRIGAN Cristian</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+/* ── CV-SPECIFIC STYLES ── */
+.cv-back {
+  display: inline-flex; align-items: center; gap: .6rem;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted); text-decoration: none;
+  padding: .5rem 1.2rem; border: 1px solid var(--border); border-radius: 3px;
+  transition: all .3s; margin-bottom: 3rem;
+}
+.cv-back:hover { color: var(--cyan); border-color: var(--cyan); background: rgba(0,200,255,.06); }
+
+.cv-hero {
+  display: flex; align-items: center; gap: 3rem;
+  padding: 3rem; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 8px;
+  position: relative; overflow: hidden; margin-bottom: 3rem;
+}
+.cv-hero::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--cyan2));
+}
+.cv-photo {
+  width: 130px; height: 130px; border-radius: 50%; flex-shrink: 0;
+  border: 2px solid var(--border2); object-fit: cover;
+  background: linear-gradient(135deg, rgba(0,200,255,.1), rgba(0,255,204,.05));
+  display: flex; align-items: center; justify-content: center; font-size: 4rem;
+}
+.cv-photo img { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; }
+.cv-hero-info { flex: 1; }
+.cv-hero-name {
+  font-family: var(--head); font-size: clamp(2rem,4vw,3.2rem);
+  font-weight: 900; color: #fff; letter-spacing: -1px; margin-bottom: .3rem;
+}
+.cv-hero-name span { color: var(--cyan); }
+.cv-hero-sub {
+  font-family: var(--mono); font-size: .8rem; color: var(--cyan2);
+  letter-spacing: 2px; margin-bottom: 1.2rem;
+}
+.cv-contacts { display: flex; flex-wrap: wrap; gap: .8rem; }
+.cv-contact-item {
+  display: flex; align-items: center; gap: .5rem;
+  font-family: var(--mono); font-size: .7rem; color: var(--muted);
+  letter-spacing: .5px;
+}
+.cv-contact-item span { color: var(--cyan); }
+
+/* Grid layout */
+.cv-grid { display: grid; grid-template-columns: 280px 1fr; gap: 2rem; }
+
+/* Sidebar */
+.cv-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
+.cv-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 1.5rem; position: relative; overflow: hidden;
+}
+.cv-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: linear-gradient(to bottom, var(--cyan), var(--cyan2));
+}
+.cv-card-title {
+  font-family: var(--mono); font-size: .65rem; color: var(--cyan);
+  letter-spacing: 3px; text-transform: uppercase; margin-bottom: 1rem;
+  padding-bottom: .5rem; border-bottom: 1px solid var(--border);
+}
+.cv-tag-list { display: flex; flex-wrap: wrap; gap: .4rem; }
+.cv-pill {
+  font-family: var(--mono); font-size: .62rem; padding: .25rem .7rem;
+  border: 1px solid var(--border); border-radius: 20px; color: var(--muted);
+  letter-spacing: .8px; transition: all .2s;
+}
+.cv-pill:hover { border-color: var(--cyan); color: var(--cyan); }
+.cv-lang-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: .6rem; }
+.cv-lang-name { font-size: .9rem; color: var(--text); font-weight: 600; }
+.cv-lang-lvl {
+  font-family: var(--mono); font-size: .62rem; padding: .2rem .6rem;
+  background: rgba(0,200,255,.08); border: 1px solid rgba(0,200,255,.2);
+  color: var(--cyan); border-radius: 3px;
+}
+.cv-cert-item { display: flex; gap: .7rem; align-items: flex-start; margin-bottom: .6rem; font-size: .88rem; color: var(--text); }
+.cv-cert-item::before { content: "▸"; color: var(--cyan); flex-shrink: 0; margin-top: .1rem; }
+.cv-interest-item { display: flex; gap: .7rem; align-items: flex-start; margin-bottom: .5rem; font-size: .85rem; color: var(--text); }
+.cv-interest-item::before { content: "◆"; color: var(--cyan2); font-size: .5rem; flex-shrink: 0; margin-top: .35rem; }
+
+/* Main content */
+.cv-main { display: flex; flex-direction: column; gap: 2rem; }
+.cv-section-title {
+  font-family: var(--head); font-size: 1rem; font-weight: 700;
+  color: var(--cyan); letter-spacing: 3px; text-transform: uppercase;
+  margin-bottom: 1.2rem; display: flex; align-items: center; gap: 1rem;
+}
+.cv-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* Timeline items */
+.cv-timeline { display: flex; flex-direction: column; gap: 1rem; }
+.cv-tl-item {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 1.4rem 1.6rem;
+  position: relative; overflow: hidden; transition: border-color .3s;
+}
+.cv-tl-item:hover { border-color: var(--border2); }
+.cv-tl-item.alternance::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--cyan), var(--cyan2)); }
+.cv-tl-item.stage::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, #5a8099, var(--border2)); }
+.cv-tl-item.formation-item::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--cyan2), var(--cyan)); }
+.cv-tl-item.other::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--border); }
+.cv-tl-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; margin-bottom: .5rem; flex-wrap: wrap; }
+.cv-tl-role { font-family: var(--head); font-size: 1rem; font-weight: 700; color: #fff; }
+.cv-tl-meta { text-align: right; }
+.cv-tl-date { font-family: var(--mono); font-size: .62rem; color: var(--cyan); letter-spacing: 1px; display: block; }
+.cv-tl-org { font-family: var(--mono); font-size: .62rem; color: var(--muted); display: block; margin-top: .2rem; }
+.cv-tl-list { list-style: none; margin-top: .6rem; }
+.cv-tl-list li { display: flex; gap: .7rem; font-size: .88rem; color: var(--text); margin-bottom: .35rem; }
+.cv-tl-list li::before { content: '▸'; color: var(--cyan); flex-shrink: 0; }
+
+/* Compétences */
+.cv-skills-grid { display: flex; flex-direction: column; gap: 1rem; }
+.cv-skill-cat {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 6px; padding: 1.4rem 1.6rem;
+}
+.cv-skill-cat-title {
+  font-family: var(--mono); font-size: .65rem; color: var(--cyan2);
+  letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem;
+  padding-bottom: .5rem; border-bottom: 1px solid var(--border);
+}
+.cv-skill-items { display: flex; flex-wrap: wrap; gap: .5rem; }
+.cv-skill-chip {
+  font-family: var(--mono); font-size: .62rem; padding: .3rem .75rem;
+  background: rgba(0,200,255,.06); border: 1px solid rgba(0,200,255,.2);
+  color: var(--cyan); border-radius: 3px; letter-spacing: .8px;
+  transition: all .2s;
+}
+.cv-skill-chip:hover { background: rgba(0,200,255,.14); border-color: var(--cyan); }
+
+/* Download button */
+.cv-dl-btn {
+  display: inline-flex; align-items: center; gap: .6rem;
+  font-family: var(--mono); font-size: .72rem; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--cyan); text-decoration: none;
+  padding: .8rem 1.8rem; border: 1px solid var(--cyan); border-radius: 3px;
+  position: relative; overflow: hidden; transition: color .3s; margin-top: .5rem;
+  background: transparent; cursor: pointer;
+}
+.cv-dl-btn::before {
+  content: ''; position: absolute; inset: 0; background: var(--cyan);
+  transform: translateX(-100%); transition: transform .3s; z-index: -1;
+}
+.cv-dl-btn:hover { color: #000; }
+.cv-dl-btn:hover::before { transform: translateX(0); }
+
+@media(max-width:900px){
+  .cv-grid { grid-template-columns: 1fr; }
+  .cv-hero { flex-direction: column; text-align: center; gap: 1.5rem; }
+  .cv-contacts { justify-content: center; }
+  .cv-tl-top { flex-direction: column; }
+  .cv-tl-meta { text-align: left; }
+}
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">CM<span>_</span>PORTFOLIO</a>
+  <ul class="nav-links">
+    <li><a href="index.html#about">À propos</a></li>
+    <li><a href="index.html#skills">Compétences</a></li>
+    <li><a href="index.html#parcours">Parcours</a></li>
+    <li><a href="index.html#realisations">Réalisations</a></li>
+    <li><a href="index.html#veille">Veille</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <div class="nav-status"><div class="status-dot"></div>Disponible en alternance</div>
+</nav>
+
+<section style="padding-top:65px;">
+  <div class="wrap">
+    <!-- Retour -->
+    <a href="index.html" class="cv-back">← Retour au portfolio</a>
+
+    <!-- Hero -->
+    <div class="cv-hero">
+      <div class="cv-photo">🧑‍💻</div>
+      <div class="cv-hero-info">
+        <div class="cv-hero-name">MIDRIGAN <span>Cristian</span></div>
+        <div class="cv-hero-sub">// Recherche Alternance — Licence Professionnelle ASSR 2026-2027</div>
+        <div class="cv-contacts">
+          <div class="cv-contact-item"><span>📍</span> 76 Rue Alphonse Daudet, 91270</div>
+          <div class="cv-contact-item"><span>✉️</span> midrigancristi@gmail.com</div>
+          <div class="cv-contact-item"><span>📞</span> 07-51-27-08-04</div>
+        </div>
+        <a href="CV_Midrigan_Cristian.pdf" download class="cv-dl-btn">📄 Télécharger le CV</a>
+      </div>
+    </div>
+
+    <!-- Grid -->
+    <div class="cv-grid">
+
+      <!-- SIDEBAR -->
+      <div class="cv-sidebar">
+
+        <div class="cv-card">
+          <div class="cv-card-title">Profil</div>
+          <p style="font-size:.92rem;color:var(--text);">Curieux, motivé, mature et déterminé. Passionné par l'administration systèmes et la cybersécurité.</p>
+        </div>
+
+        <div class="cv-card">
+          <div class="cv-card-title">Langues</div>
+          <div class="cv-lang-item"><span class="cv-lang-name">Roumain</span><span class="cv-lang-lvl">B2</span></div>
+          <div class="cv-lang-item"><span class="cv-lang-name">Russe</span><span class="cv-lang-lvl">B2</span></div>
+          <div class="cv-lang-item"><span class="cv-lang-name">Anglais</span><span class="cv-lang-lvl">B1</span></div>
+        </div>
+
+        <div class="cv-card">
+          <div class="cv-card-title">Certifications</div>
+          <div class="cv-cert-item">2024 — Certification Pix</div>
+          <div class="cv-cert-item">2023 — Permis B</div>
+        </div>
+
+        <div class="cv-card">
+          <div class="cv-card-title">Centres d'intérêt</div>
+          <div class="cv-interest-item">Musculation (1-2 fois par semaine)</div>
+          <div class="cv-interest-item">Réparation (Consoles, Ordinateurs)</div>
+          <div class="cv-interest-item">Automobile (Réparation)</div>
+          <div class="cv-interest-item">Guitare Classique (2h/jour)</div>
+        </div>
+
+      </div>
+
+      <!-- MAIN -->
+      <div class="cv-main">
+
+        <!-- Formation -->
+        <div>
+          <div class="cv-section-title">🎓 Formation</div>
+          <div class="cv-timeline">
+            <div class="cv-tl-item formation-item">
+              <div class="cv-tl-top">
+                <div class="cv-tl-role">BTS SIO Option SISR</div>
+                <div class="cv-tl-meta">
+                  <span class="cv-tl-date">2024 — 2026</span>
+                  <span class="cv-tl-org">Lycée Parc de Vilgenis — Massy</span>
+                </div>
+              </div>
+            </div>
+            <div class="cv-tl-item formation-item">
+              <div class="cv-tl-top">
+                <div class="cv-tl-role">Bac Pro Système Numérique</div>
+                <div class="cv-tl-meta">
+                  <span class="cv-tl-date">2021 — 2024</span>
+                  <span class="cv-tl-org">Lycée Prof. Ampère — Morsang/Orge</span>
+                </div>
+              </div>
+              <ul class="cv-tl-list"><li>Mention : Assez Bien</li></ul>
+            </div>
+            <div class="cv-tl-item formation-item">
+              <div class="cv-tl-top">
+                <div class="cv-tl-role">UPE2A — Brevet</div>
+                <div class="cv-tl-meta">
+                  <span class="cv-tl-date">2020</span>
+                  <span class="cv-tl-org">Lycée Charles Baudelaire — Évry</span>
+                </div>
+              </div>
+              <ul class="cv-tl-list"><li>Mention : Bien</li></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Expériences -->
+        <div>
+          <div class="cv-section-title">💼 Expériences</div>
+          <div class="cv-timeline">
+
+            <div class="cv-tl-item alternance">
+              <div class="cv-tl-top">
+                <div class="cv-tl-role">Alternance — Service Informatique</div>
+                <div class="cv-tl-meta">
+                  <span class="cv-tl-date">17/11/2025 — Aujourd'hui</span>
+                  <span class="cv-tl-org">Mairie de Vigneux-sur-Seine</span>
+                </div>
+              </div>
+              <ul class="cv-tl-list">
+                <li>Administrer l'Active Directory (Gestion des comptes et GPO) et gestion des incidents via GLPI pour les agents municipaux</li>
+                <li>Maintenir et superviser le parc informatique (PC, imprimantes, téléphonie) et l'infrastructure réseau</li>
+                <li>Participer au déploiement de nouveaux postes et à la sécurisation des données (Sauvegardes, Antivirus)</li>
+              </ul>
+            </div>
+
+            <div class="cv-tl-item stage">
+              <div class="cv-tl-top">
+                <div class="cv-tl-role">Stage — Service Informatique</div>
+                <div class="cv-tl-meta">
+                  <span class="cv-tl-date">Décembre 2023</span>
+                  <span class="cv-tl-org">Mairie de Vigneux-sur-Seine</span>
+                </div>
+              </div>
+              <ul class="cv-tl-list">
+                <li>Gestion des appels téléphoniques</li>
+                <li>Création des démarches pour le projet de la crèche</li>
+              </ul>
+            </div>
+
+            <div class="cv-tl-item stage">
+              <div class="cv-tl-top">
+                <div class="cv-tl-role">Stage — Service Informatique</div>
+                <div class="cv-tl-meta">
+                  <span class="cv-tl-date">Juin 2022</span>
+                  <span class="cv-tl-org">Mairie de Vigneux-sur-Seine</span>
+                </div>
+              </div>
+              <ul class="cv-tl-list">
+                <li>Masterisation des PC portables</li>
+                <li>Gestion de l'inventaire avec GLPI</li>
+              </ul>
+            </div>
+
+            <div class="cv-tl-item other">
+              <div class="cv-tl-top">
+                <div class="cv-tl-role">Préparateur de Commandes</div>
+                <div class="cv-tl-meta">
+                  <span class="cv-tl-date">2023 — 2025</span>
+                  <span class="cv-tl-org">Auchan Drive, Montgeron</span>
+                </div>
+              </div>
+              <ul class="cv-tl-list">
+                <li>Livraison des commandes aux clients</li>
+                <li>Préparation des commandes dans les délais impartis</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Compétences -->
+        <div>
+          <div class="cv-section-title">⚡ Compétences</div>
+          <div class="cv-skills-grid">
+            <div class="cv-skill-cat">
+              <div class="cv-skill-cat-title">🖥️ Administration Systèmes</div>
+              <div class="cv-skill-items">
+                <span class="cv-skill-chip">Windows Server</span>
+                <span class="cv-skill-chip">Active Directory</span>
+                <span class="cv-skill-chip">DNS</span>
+                <span class="cv-skill-chip">DHCP</span>
+                <span class="cv-skill-chip">GPO</span>
+                <span class="cv-skill-chip">Linux</span>
+                <span class="cv-skill-chip">Apache</span>
+                <span class="cv-skill-chip">SSH</span>
+                <span class="cv-skill-chip">Hyper-V</span>
+                <span class="cv-skill-chip">VMware</span>
+                <span class="cv-skill-chip">Windows 10/11</span>
+                <span class="cv-skill-chip">Déploiement d'images</span>
+              </div>
+            </div>
+            <div class="cv-skill-cat">
+              <div class="cv-skill-cat-title">🌐 Infrastructures Réseaux</div>
+              <div class="cv-skill-items">
+                <span class="cv-skill-chip">VLAN</span>
+                <span class="cv-skill-chip">Trunks</span>
+                <span class="cv-skill-chip">STP</span>
+                <span class="cv-skill-chip">Routage statique/dynamique</span>
+                <span class="cv-skill-chip">Cisco IOS</span>
+                <span class="cv-skill-chip">HPE Aruba</span>
+                <span class="cv-skill-chip">IPv4</span>
+                <span class="cv-skill-chip">Subnetting</span>
+                <span class="cv-skill-chip">Wi-Fi</span>
+              </div>
+            </div>
+            <div class="cv-skill-cat">
+              <div class="cv-skill-cat-title">🔒 Cybersécurité</div>
+              <div class="cv-skill-items">
+                <span class="cv-skill-chip">Droits NTFS</span>
+                <span class="cv-skill-chip">Pare-feu</span>
+                <span class="cv-skill-chip">Antivirus centralisé</span>
+                <span class="cv-skill-chip">Veeam Backup</span>
+                <span class="cv-skill-chip">GLPI</span>
+                <span class="cv-skill-chip">Zabbix</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="fi"><span>MIDRIGAN Cristian</span> &nbsp;·&nbsp; BTS SIO SISR &nbsp;·&nbsp; Mairie de Vigneux-sur-Seine &nbsp;·&nbsp; 2025</div></footer>
+
+<script src="script.js"></script>
+</body>
+</html>
