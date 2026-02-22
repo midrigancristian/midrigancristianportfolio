@@ -401,7 +401,7 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:2r
 .svc-desc{font-size:.9rem;color:var(--muted);line-height:1.5;}
 .svc-focus-badge{font-family:var(--mono);font-size:.57rem;color:var(--cyan2);border:1px solid rgba(0,255,204,.3);padding:.15rem .5rem;border-radius:2px;margin-left:auto;white-space:nowrap;}
 
-/* ── Responsive ── */
+/* ── Responsive ──test */
 @media(max-width:900px){
   .ntic-inner-grid{grid-template-columns:1fr;gap:1.5rem;}
   .ntic-divider{display:none;}
