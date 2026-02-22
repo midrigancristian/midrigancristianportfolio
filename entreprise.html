@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Entreprise | Mairie de Vigneux-sur-Seine</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">CM<span>_</span>PORTFOLIO</a>
+  <a href="index.html" class="nav-back">← Retour au portfolio</a>
+</nav>
+
+<!-- HERO -->
+<div class="ent-hero">
+  <div class="ent-tag">// PRÉSENTATION DE L'ENTREPRISE</div>
+  <h1 class="ent-title">Mairie de <span>Vigneux-sur-Seine</span></h1>
+  <p class="ent-sub">Service NTIC &nbsp;·&nbsp; Infrastructure &amp; Systèmes d'Information</p>
+</div>
+
+<div class="wrap-lg">
+
+  <!-- ── SECTION 1 : CHIFFRES CLÉS ── -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">La Collectivité en Chiffres</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="info-grid">
+      <div class="info-card"><div class="info-num">~700</div><div class="info-label">Agents municipaux</div></div>
+      <div class="info-card"><div class="info-num">39</div><div class="info-label">Élus dont 14 adjoints</div></div>
+      <div class="info-card"><div class="info-num">40 000+</div><div class="info-label">Habitants (surclassement)</div></div>
+      <div class="info-card"><div class="info-num">7</div><div class="info-label">Grandes directions</div></div>
+      <div class="info-card"><div class="info-num">1 DGS</div><div class="info-label">+ plusieurs DGA</div></div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 2 : ORGANIGRAMME ── -->
+  <section>
+    <div class="sec-head">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Organigramme &amp; Positionnement NTIC</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="org-chart">
+
+      <!-- NIVEAU 1 : MAIRE -->
+      <div class="org-level">
+        <div class="org-node mayor">
+          <div class="n-icon">🏛️</div>
+          <div class="n-name">CHAZAL Thomas</div>
+          <div class="n-role">Maire de Vigneux-sur-Seine</div>
+          <div class="n-badge n-badge-yellow">Autorité Politique</div>
+        </div>
+      </div>
+
+      <div class="org-connector-v"></div>
+
+      <!-- NIVEAU 2 : DGS / DGA -->
+      <div class="org-level">
+        <div class="org-node">
+          <div class="n-icon">⚙️</div>
+          <div class="n-name">DGS / DGA</div>
+          <div class="n-role">Direction Générale des Services<br>+ Directeurs Généraux Adjoints</div>
+        </div>
+      </div>
+
+      <div class="org-connector-v"></div>
+
+      <!-- NIVEAU 3 : TOUTES LES DIRECTIONS -->
+      <div class="org-level org-level-wrap">
+        <div class="service-box"><div class="sb-icon">📋</div><div class="sb-label">Citoyenneté<br>État civil</div></div>
+        <div class="service-box"><div class="sb-icon">🏫</div><div class="sb-label">Famille &amp;<br>Éducation</div></div>
+        <div class="service-box"><div class="sb-icon">🚔</div><div class="sb-label">Sécurité<br>Police mun.</div></div>
+        <div class="service-box"><div class="sb-icon">🤝</div><div class="sb-label">Social &amp;<br>Santé</div></div>
+        <div class="service-box"><div class="sb-icon">🏗️</div><div class="sb-label">Technique &amp;<br>Urbanisme</div></div>
+        <div class="service-box"><div class="sb-icon">🎭</div><div class="sb-label">Culture &amp;<br>Loisirs</div></div>
+        <!-- Direction Supports — mise en avant car contient NTIC -->
+        <div class="org-node chief">
+          <div class="n-icon">🗂️</div>
+          <div class="n-name">Direction Supports</div>
+          <div class="n-role">RH · Finances · Com.<br><strong style="color:var(--cyan)">Informatique (NTIC)</strong></div>
+        </div>
+      </div>
+
+      <div class="org-connector-v" style="margin-top:1.5rem;"></div>
+
+      <!-- ── ENCADRÉ SERVICE NTIC ── -->
+      <div class="ntic-box">
+
+        <!-- Chef de service -->
+        <div class="ntic-chef-wrap">
+          <div class="org-node chief">
+            <div class="n-icon">👨‍💼</div>
+            <div class="n-name">ROCHE Jean-Michel</div>
+            <div class="n-role">Chef de Service NTIC</div>
+            <div class="n-badge">Responsable</div>
+          </div>
+        </div>
+
+        <!-- Séparateur horizontal -->
+        <div class="ntic-separator"></div>
+
+        <!-- Grille intérieure : 2 colonnes -->
+        <div class="ntic-inner-grid">
+
+          <!-- COL GAUCHE : Accueil téléphonique + Admins réseau -->
+          <div class="ntic-col">
+            <div class="ntic-col-label">Support &amp; Infrastructure</div>
+
+            <div class="org-node">
+              <div class="n-icon">📞</div>
+              <div class="n-name">BENEVENT Nelly</div>
+              <div class="n-role">Téléphone général<br>Accueil &amp; coordination</div>
+            </div>
+
+            <div class="ntic-mini-separator"></div>
+
+            <div class="ntic-col-label">Administration Réseau</div>
+
+            <div class="ntic-admin-row">
+              <div class="org-node admin-net">
+                <div class="n-icon">🌐</div>
+                <div class="n-name">HAMADI Anthony</div>
+                <div class="n-role">Administrateur Réseau</div>
+                <div class="n-badge n-badge-green">Admin Réseau</div>
+              </div>
+              <div class="org-node admin-net">
+                <div class="n-icon">🌐</div>
+                <div class="n-name">Abdelaziz</div>
+                <div class="n-role">Administrateur Réseau</div>
+                <div class="n-badge n-badge-green">Admin Réseau</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- SÉPARATEUR VERTICAL -->
+          <div class="ntic-divider"></div>
+
+          <!-- COL DROITE : Techniciens NTIC -->
+          <div class="ntic-col">
+            <div class="ntic-col-label">Techniciens NTIC</div>
+
+            <div class="org-node">
+              <div class="n-icon">🔧</div>
+              <div class="n-name">DOREUX Hugo</div>
+              <div class="n-role">Technicien NTIC</div>
+            </div>
+
+            <div class="org-node">
+              <div class="n-icon">🔧</div>
+              <div class="n-name">FALLAK Amine</div>
+              <div class="n-role">Technicien NTIC</div>
+            </div>
+
+            <div class="org-node">
+              <div class="n-icon">🔧</div>
+              <div class="n-name">DENEFF Sébastien</div>
+              <div class="n-role">Technicien NTIC</div>
+            </div>
+
+            <!-- MOI — mis en avant -->
+            <div class="org-node me">
+              <div class="n-icon">⭐</div>
+              <div class="n-name">MIDRIGAN Cristian</div>
+              <div class="n-role">Technicien NTIC</div>
+              <div class="n-badge">Alternant · BTS SIO SISR</div>
+            </div>
+          </div>
+
+        </div><!-- /ntic-inner-grid -->
+      </div><!-- /ntic-box -->
+
+    </div><!-- /org-chart -->
+
+    <!-- LÉGENDE -->
+    <div class="org-legend">
+      <div class="leg-item"><div class="leg-dot leg-dot-yellow"></div>Autorité politique</div>
+      <div class="leg-item"><div class="leg-dot leg-dot-cyan"></div>Responsable / Chef de service</div>
+      <div class="leg-item"><div class="leg-dot leg-dot-green"></div>Administration réseau</div>
+      <div class="leg-item"><div class="leg-dot leg-dot-grey"></div>Autres directions</div>
+      <div class="leg-item"><div class="leg-dot leg-dot-me"></div>Ma position (alternant)</div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 3 : SERVICES DE LA MAIRIE ── -->
+  <section class="ent-section-mt">
+    <div class="sec-head">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Les Services de la Mairie</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card svc-card-focus">
+        <div class="svc-head-row">
+          <div class="svc-icon">💻</div>
+          <div class="svc-name">Service NTIC</div>
+          <div class="svc-focus-badge">MON SERVICE</div>
+        </div>
+        <div class="svc-desc">Administration des systèmes (AD, DNS, DHCP), infrastructure réseau Cisco, supervision Zabbix, déploiement de postes, téléphonie IP et sécurité des données.</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-head-row"><div class="svc-icon">👥</div><div class="svc-name">Ressources Humaines</div></div>
+        <div class="svc-desc">Gestion des ~700 agents : recrutement, paie, formations, carrières et relations sociales au sein de la collectivité.</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-head-row"><div class="svc-icon">💰</div><div class="svc-name">Finances</div></div>
+        <div class="svc-desc">Budget municipal, comptabilité publique et gestion des marchés publics.</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-head-row"><div class="svc-icon">📋</div><div class="svc-name">Citoyenneté &amp; État Civil</div></div>
+        <div class="svc-desc">Passeports, cartes d'identité, mariages, naissances, élections et accueil du public à l'Hôtel de Ville.</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-head-row"><div class="svc-icon">🏫</div><div class="svc-name">Famille &amp; Éducation</div></div>
+        <div class="svc-desc">Gestion des écoles maternelles et élémentaires, petite enfance (crèches), restauration scolaire et périscolaire.</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-head-row"><div class="svc-icon">🚔</div><div class="svc-name">Sécurité</div></div>
+        <div class="svc-desc">Police municipale, ASVP (stationnement), vidéosurveillance et prévention de la délinquance.</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-head-row"><div class="svc-icon">🤝</div><div class="svc-name">Social &amp; Santé</div></div>
+        <div class="svc-desc">CCAS (aide sociale d'urgence), logement social, accompagnement des seniors et actions de santé publique.</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-head-row"><div class="svc-icon">🏗️</div><div class="svc-name">Technique &amp; Urbanisme</div></div>
+        <div class="svc-desc">Permis de construire, voirie, espaces verts, propreté urbaine et gestion du patrimoine bâti.</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-head-row"><div class="svc-icon">🎭</div><div class="svc-name">Culture &amp; Loisirs</div></div>
+        <div class="svc-desc">Sports, vie associative, événementiel, bibliothèque et animations de quartier.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION 4 : IMPLANTATIONS ── -->
+  <section class="ent-section-mt">
+    <div class="sec-head">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Implantations Territoriales</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="svc-grid svc-grid-3">
+      <div class="svc-card svc-card-focus">
+        <div class="svc-head-row"><div class="svc-icon">🏛️</div><div class="svc-name">Hôtel de Ville</div><div class="svc-focus-badge">SIÈGE</div></div>
+        <div class="svc-desc">75 rue Pierre Marin — Siège central de la mairie, où est basé le service NTIC.</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-head-row"><div class="svc-icon">🏘️</div><div class="svc-name">Mairies Annexes</div></div>
+        <div class="svc-desc">Antenne Anatole France et autres points d'accueil de quartier pour les démarches de proximité.</div>
+      </div>
+      <div class="svc-card">
+        <div class="svc-head-row"><div class="svc-icon">🌍</div><div class="svc-name">Services Extérieurs</div></div>
+        <div class="svc-desc">CCAS, Police Municipale, Centre Social l'Amandier, gymnases, écoles — tous reliés à notre infrastructure réseau.</div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /wrap-lg -->
+
+<footer>
+  <div class="fi"><span>MIDRIGAN Cristian</span> &nbsp;·&nbsp; BTS SIO SISR &nbsp;·&nbsp; Mairie de Vigneux-sur-Seine &nbsp;·&nbsp; 2025–2026</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

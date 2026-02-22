@@ -46,7 +46,8 @@ section{position:relative;z-index:2;}
 .photo-wrap{width:200px;height:200px;border-radius:50%;position:relative;display:flex;align-items:center;justify-content:center;}
 .photo-ring{position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(from 0deg,var(--cyan),var(--cyan2),transparent 60%,var(--cyan));animation:spin 4s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.photo-inner{width:198px;height:198px;border-radius:50%;background:linear-gradient(135deg,rgba(0,200,255,.1),rgba(0,255,204,.05));display:flex;align-items:center;justify-content:center;position:relative;z-index:1;font-size:5rem;border:2px solid var(--border);}
+.photo-inner{width:198px;height:198px;border-radius:50%;background:linear-gradient(135deg,rgba(0,200,255,.1),rgba(0,255,204,.05));display:flex;align-items:center;justify-content:center;position:relative;z-index:1;font-size:5rem;border:2px solid var(--border);overflow:hidden;}
+.photo-inner img{width:100%;height:100%;object-fit:cover;}
 .photo-name{font-family:var(--mono);font-size:.65rem;color:var(--cyan);letter-spacing:2px;text-align:center;}
 .about-text p{color:var(--text);margin-bottom:1rem;font-size:1rem;}
 .tags{display:flex;flex-wrap:wrap;gap:.5rem;margin:1rem 0 1.5rem;}
@@ -289,6 +290,8 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:2r
   color:#ffa500;
 }
 
+
+
 /* Barre de progression (carte en cours) */
 .cert-progress-bar{
   height:3px;background:rgba(255,165,0,.15);border-radius:2px;
@@ -307,3 +310,105 @@ footer{position:relative;z-index:2;border-top:1px solid var(--border);padding:2r
 
 @media(max-width:900px){.cert-grid{grid-template-columns:1fr;}}
 @media(max-width:600px){.cert-grid{grid-template-columns:1fr;}}
+
+/* ================================================================
+   PAGE ENTREPRISE — styles spécifiques (entreprise.html)
+   ================================================================ */
+
+/* ── Nav retour ── */
+.nav-back{font-family:var(--mono);font-size:.72rem;color:var(--muted);text-decoration:none;letter-spacing:1.5px;display:flex;align-items:center;gap:.5rem;transition:color .3s;}
+.nav-back:hover{color:var(--cyan);}
+
+/* ── Hero entreprise ── */
+.ent-hero{min-height:36vh;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:100px 2rem 3rem;position:relative;z-index:2;}
+.ent-tag{font-family:var(--mono);font-size:.75rem;color:var(--cyan2);letter-spacing:4px;margin-bottom:1.2rem;}
+.ent-title{font-family:var(--head);font-size:clamp(2.2rem,5vw,4rem);font-weight:900;color:#fff;letter-spacing:-1px;line-height:1.1;}
+.ent-title span{color:var(--cyan);text-shadow:0 0 40px rgba(0,200,255,.4);}
+.ent-sub{font-family:var(--mono);font-size:.82rem;color:var(--muted);letter-spacing:2px;margin-top:1rem;}
+
+/* ── Wrap large ── */
+.wrap-lg{max-width:1200px;margin:0 auto;padding:4rem 2rem 6rem;}
+.ent-section-mt{margin-top:5rem;}
+
+/* ── Chiffres clés ── */
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1.2rem;margin-bottom:4rem;}
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.5rem;position:relative;overflow:hidden;transition:border-color .3s;}
+.info-card:hover{border-color:var(--border2);}
+.info-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(to bottom,var(--cyan),var(--cyan2));}
+.info-num{font-family:var(--head);font-size:2rem;font-weight:900;color:var(--cyan);line-height:1;}
+.info-label{font-family:var(--mono);font-size:.65rem;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-top:.3rem;}
+
+/* ── Organigramme — structure ── */
+.org-chart{position:relative;padding:2rem 0 3rem;display:flex;flex-direction:column;align-items:center;}
+.org-level{display:flex;justify-content:center;gap:1.5rem;width:100%;}
+.org-level-wrap{flex-wrap:wrap;gap:1rem;padding:0 1rem;}
+.org-connector-v{width:2px;height:48px;background:linear-gradient(to bottom,var(--cyan),rgba(0,200,255,.25));margin:0 auto;}
+
+/* ── Noeuds ── */
+.org-node{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1rem 1.2rem;text-align:center;position:relative;transition:all .3s;min-width:150px;max-width:185px;flex-shrink:0;}
+.org-node:hover{border-color:var(--border2);background:rgba(0,200,255,.08);}
+.org-node.mayor{border-color:var(--yellow);box-shadow:0 0 22px rgba(255,215,0,.15);}
+.org-node.mayor .n-role{color:var(--yellow);}
+.org-node.chief{border-color:var(--cyan);box-shadow:0 0 18px rgba(0,200,255,.12);}
+.org-node.chief .n-role{color:var(--cyan);}
+.org-node.admin-net .n-role{color:var(--cyan2);}
+.org-node.me{border-color:var(--cyan2);box-shadow:0 0 22px rgba(0,255,204,.2);animation:meGlow 3s ease-in-out infinite;}
+@keyframes meGlow{0%,100%{box-shadow:0 0 18px rgba(0,255,204,.2);}50%{box-shadow:0 0 32px rgba(0,255,204,.45);}}
+.n-icon{font-size:1.4rem;margin-bottom:.4rem;}
+.n-name{font-family:var(--head);font-size:.88rem;font-weight:700;color:#fff;line-height:1.2;}
+.n-role{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-top:.3rem;line-height:1.4;}
+.n-badge{font-family:var(--mono);font-size:.54rem;padding:.18rem .5rem;border-radius:2px;background:rgba(0,255,204,.1);border:1px solid rgba(0,255,204,.3);color:var(--cyan2);letter-spacing:1px;margin-top:.4rem;display:inline-block;}
+.n-badge-yellow{background:rgba(255,215,0,.1)!important;border-color:rgba(255,215,0,.35)!important;color:var(--yellow)!important;}
+.n-badge-green{background:rgba(0,255,204,.08)!important;border-color:rgba(0,255,204,.3)!important;color:var(--cyan2)!important;}
+
+/* ── Service boxes (directions grisées) ── */
+.service-box{background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:.7rem 1rem;text-align:center;min-width:100px;max-width:125px;flex-shrink:0;opacity:.6;transition:opacity .3s;}
+.service-box:hover{opacity:.9;}
+.sb-icon{font-size:1rem;margin-bottom:.2rem;}
+.sb-label{font-family:var(--mono);font-size:.57rem;color:var(--muted);letter-spacing:.7px;text-transform:uppercase;line-height:1.3;}
+
+/* ── Encadré SERVICE NTIC ── */
+.ntic-box{border:1px solid rgba(0,200,255,.35);border-radius:6px;background:rgba(0,200,255,.025);padding:2rem;position:relative;width:100%;max-width:1100px;}
+.ntic-box::before{content:'SERVICE NTIC';position:absolute;top:-11px;left:2rem;font-family:var(--mono);font-size:.65rem;color:var(--cyan);letter-spacing:3px;background:var(--bg);padding:0 .8rem;}
+.ntic-chef-wrap{display:flex;justify-content:center;margin-bottom:2rem;}
+.ntic-separator{height:2px;background:linear-gradient(to right,transparent,rgba(0,200,255,.3),transparent);margin:0 3rem 2rem;}
+.ntic-mini-separator{height:1.4rem;width:2px;background:linear-gradient(to bottom,var(--border),transparent);margin:.2rem auto .4rem;}
+.ntic-inner-grid{display:grid;grid-template-columns:1fr auto 1fr;gap:2rem;align-items:start;}
+.ntic-col{display:flex;flex-direction:column;align-items:center;gap:.9rem;}
+.ntic-col-label{font-family:var(--mono);font-size:.58rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;text-align:center;}
+.ntic-divider{width:1px;background:linear-gradient(to bottom,transparent,var(--border),transparent);align-self:stretch;}
+.ntic-admin-row{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+
+/* ── Légende ── */
+.org-legend{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.5rem;justify-content:center;}
+.leg-item{display:flex;align-items:center;gap:.5rem;font-family:var(--mono);font-size:.64rem;color:var(--muted);letter-spacing:1px;}
+.leg-dot{width:12px;height:12px;border-radius:2px;border:1px solid;}
+.leg-dot-yellow{border-color:var(--yellow);background:rgba(255,215,0,.12);}
+.leg-dot-cyan{border-color:var(--cyan);background:rgba(0,200,255,.12);}
+.leg-dot-green{border-color:var(--cyan2);background:rgba(0,255,204,.12);}
+.leg-dot-grey{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
+.leg-dot-me{border-color:var(--cyan2);background:rgba(0,255,204,.18);box-shadow:0 0 6px rgba(0,255,204,.4);}
+
+/* ── Grille services ── */
+.svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;}
+.svc-grid-3{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+.svc-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1.2rem 1.5rem;transition:border-color .3s;}
+.svc-card:hover{border-color:var(--border2);}
+.svc-card-focus{border-color:rgba(0,200,255,.4);background:rgba(0,200,255,.05);}
+.svc-head-row{display:flex;align-items:center;gap:.8rem;margin-bottom:.6rem;}
+.svc-icon{font-size:1.3rem;}
+.svc-name{font-family:var(--head);font-size:1rem;font-weight:700;color:#fff;}
+.svc-desc{font-size:.9rem;color:var(--muted);line-height:1.5;}
+.svc-focus-badge{font-family:var(--mono);font-size:.57rem;color:var(--cyan2);border:1px solid rgba(0,255,204,.3);padding:.15rem .5rem;border-radius:2px;margin-left:auto;white-space:nowrap;}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .ntic-inner-grid{grid-template-columns:1fr;gap:1.5rem;}
+  .ntic-divider{display:none;}
+  .wrap-lg{padding:3rem 1.5rem 5rem;}
+}
+@media(max-width:600px){
+  .org-level{flex-wrap:wrap;gap:.8rem;}
+  .info-grid{grid-template-columns:repeat(2,1fr);}
+  .org-node{min-width:130px;}
+}
