@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tableau de Synthèse E4 | MIDRIGAN Cristian</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  /* ── PAGE TABLEAU ── */
+  .tab-page{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:6rem 2rem 4rem;
+    position:relative;
+    z-index:2;
+  }
+
+  /* Titre hero */
+  .tab-tag{
+    font-family:var(--mono);
+    font-size:.72rem;
+    color:var(--cyan2);
+    letter-spacing:4px;
+    text-transform:uppercase;
+    margin-bottom:1.2rem;
+  }
+  .tab-title{
+    font-family:var(--head);
+    font-size:clamp(2.5rem,6vw,5rem);
+    font-weight:900;
+    color:#fff;
+    text-align:center;
+    margin-bottom:.5rem;
+    letter-spacing:-1px;
+  }
+  .tab-title span{color:var(--cyan);text-shadow:0 0 30px rgba(0,200,255,.4);}
+  .tab-subtitle{
+    font-family:var(--mono);
+    font-size:.82rem;
+    color:var(--muted);
+    letter-spacing:2px;
+    margin-bottom:4rem;
+  }
+
+  /* Card centrale */
+  .tab-card{
+    background:rgba(0,200,255,.04);
+    border:1px solid var(--border2);
+    border-radius:8px;
+    padding:3rem 3.5rem;
+    max-width:560px;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:1.6rem;
+    box-shadow:0 0 60px rgba(0,200,255,.06);
+    position:relative;
+    overflow:hidden;
+  }
+  .tab-card::before{
+    content:'';
+    position:absolute;
+    top:0;left:0;right:0;
+    height:2px;
+    background:linear-gradient(to right,transparent,var(--cyan),var(--cyan2),transparent);
+  }
+
+  .tab-icon{font-size:3.5rem;line-height:1;}
+
+  .tab-doc-name{
+    font-family:var(--head);
+    font-size:1.4rem;
+    font-weight:700;
+    color:#fff;
+    text-align:center;
+  }
+  .tab-doc-desc{
+    font-family:var(--body);
+    font-size:.95rem;
+    color:var(--muted);
+    text-align:center;
+    line-height:1.6;
+  }
+
+  /* Badges info */
+  .tab-badges{
+    display:flex;
+    gap:.7rem;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .tab-badge{
+    font-family:var(--mono);
+    font-size:.62rem;
+    letter-spacing:1px;
+    padding:.3rem .9rem;
+    border-radius:3px;
+    border:1px solid var(--border);
+    color:var(--muted);
+  }
+  .tab-badge.cyan{border-color:rgba(0,200,255,.4);color:var(--cyan);}
+  .tab-badge.green{border-color:rgba(0,255,204,.3);color:var(--cyan2);}
+
+  /* Séparateur */
+  .tab-sep{
+    width:100%;
+    height:1px;
+    background:linear-gradient(to right,transparent,var(--border),transparent);
+  }
+
+  /* Boutons */
+  .tab-btns{
+    display:flex;
+    gap:1rem;
+    flex-wrap:wrap;
+    justify-content:center;
+    width:100%;
+  }
+  .tab-btn-dl{
+    font-family:var(--mono);
+    font-size:.75rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    padding:1rem 2rem;
+    border-radius:4px;
+    border:1px solid var(--cyan);
+    color:#000;
+    background:var(--cyan);
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:.6rem;
+    transition:all .3s;
+    font-weight:700;
+    flex:1;
+    justify-content:center;
+  }
+  .tab-btn-dl:hover{
+    background:var(--cyan2);
+    border-color:var(--cyan2);
+    box-shadow:0 0 25px rgba(0,200,255,.4);
+    transform:translateY(-1px);
+  }
+  .tab-btn-back{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    padding:1rem 1.5rem;
+    border-radius:4px;
+    border:1px solid var(--border);
+    color:var(--muted);
+    background:transparent;
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    transition:all .3s;
+    flex:1;
+    justify-content:center;
+  }
+  .tab-btn-back:hover{border-color:var(--muted);color:var(--text);}
+
+  /* Alerte si pas de fichier */
+  .tab-notice{
+    font-family:var(--mono);
+    font-size:.68rem;
+    color:var(--muted);
+    text-align:center;
+    letter-spacing:.5px;
+    margin-top:.5rem;
+  }
+  .tab-notice span{color:var(--cyan2);}
+
+  /* Scan line animation sur la card */
+  @keyframes scanline{
+    0%{transform:translateY(-100%);}
+    100%{transform:translateY(400%);}
+  }
+  .tab-card::after{
+    content:'';
+    position:absolute;
+    left:0;right:0;
+    height:1px;
+    background:linear-gradient(to right,transparent,rgba(0,200,255,.15),transparent);
+    animation:scanline 4s linear infinite;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">CM<span>_</span>PORTFOLIO</a>
+  <a href="index.html" class="nav-back">← Retour au portfolio</a>
+</nav>
+
+<!-- PAGE PRINCIPALE -->
+<div class="tab-page">
+
+  <div class="tab-tag">// BTS SIO SISR · ÉPREUVE E4</div>
+  <h1 class="tab-title">Tableau de <span>Synthèse</span></h1>
+  <p class="tab-subtitle">Récapitulatif des situations professionnelles · 2025–2026</p>
+
+  <div class="tab-card">
+
+    <div class="tab-icon">📊</div>
+
+    <div class="tab-doc-name">Tableau de Synthèse E4</div>
+
+    <div class="tab-badges">
+      <span class="tab-badge cyan">BTS SIO SISR</span>
+      <span class="tab-badge green">Épreuve E4</span>
+      <span class="tab-badge">2025 – 2026</span>
+      <span class="tab-badge">Mairie de Vigneux-sur-Seine</span>
+    </div>
+
+    <div class="tab-doc-desc">
+      Récapitulatif de l'ensemble de mes situations professionnelles réalisées en alternance au sein du service NTIC de la Mairie de Vigneux-sur-Seine.
+    </div>
+
+    <div class="tab-sep"></div>
+
+    <div class="tab-btns">
+      <a href="tableau_synthese_E4.pdf" target="_blank" download class="tab-btn-dl">
+        📥 &nbsp;Télécharger le tableau
+      </a>
+      <a href="index.html" class="tab-btn-back">
+        ← &nbsp;Retour accueil
+      </a>
+    </div>
+
+    <p class="tab-notice">Format PDF · <span>Cliquez pour ouvrir et télécharger</span></p>
+
+  </div>
+
+</div>
+
+<footer>
+  <div class="fi"><span>MIDRIGAN Cristian</span> &nbsp;·&nbsp; BTS SIO SISR &nbsp;·&nbsp; Mairie de Vigneux-sur-Seine &nbsp;·&nbsp; 2025–2026</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
