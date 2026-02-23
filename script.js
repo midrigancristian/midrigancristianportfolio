@@ -7,7 +7,6 @@ function P(){this.reset=function(){this.x=Math.random()*W;this.y=Math.random()*H
 for(var i=0;i<90;i++){var p=new P();pts.push(p);}
 (function anim(){ctx.clearRect(0,0,W,H);pts.forEach(function(p){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W||p.y<0||p.y>H)p.reset();ctx.beginPath();ctx.arc(p.x,p.y,p.sz,0,Math.PI*2);ctx.fillStyle=p.c;ctx.globalAlpha=p.a;ctx.fill();ctx.globalAlpha=1;});for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<90){ctx.beginPath();ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.strokeStyle='#00c8ff';ctx.globalAlpha=(1-d/90)*.09;ctx.lineWidth=.5;ctx.stroke();ctx.globalAlpha=1;}}}requestAnimationFrame(anim);})();
 
-
 /* ── FILTRES PARCOURS ── */
 function filterP(t,btn){document.querySelectorAll('.pf-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');document.querySelectorAll('.pc').forEach(function(c){if(t==='all'||c.dataset.type===t)c.classList.remove('hidden');else c.classList.add('hidden');});}
 
@@ -21,19 +20,15 @@ function submitForm(e){e.preventDefault();var b=e.target.querySelector('.c-sbtn'
 var secs=document.querySelectorAll('section[id]');
 var nls=document.querySelectorAll('.nav-links a');
 addEventListener('scroll',function(){var sy=scrollY;secs.forEach(function(s){if(sy>=s.offsetTop-80&&sy<s.offsetTop-80+s.offsetHeight){nls.forEach(function(a){a.classList.remove('active');});var a=document.querySelector('.nav-links a[href="#'+s.id+'"]');if(a)a.classList.add('active');}});});
-/* ── LIVE NEWS FEED — multi-proxy GitHub Pages compatible ── */
-var NEWS_FEEDS = [
-  { url:'https://news.google.com/rss/search?q=IA+cybers%C3%A9curit%C3%A9+XDR+d%C3%A9tection&hl=fr&gl=FR&ceid=FR:fr', label:'IA & Cyberdéfense' },
-  { url:'https://news.google.com/rss/search?q=malware+polymorphe+intelligence+artificielle&hl=fr&gl=FR&ceid=FR:fr', label:'Malware IA' },
-  { url:'https://news.google.com/rss/search?q=ANSSI+cybers%C3%A9curit%C3%A9+2026&hl=fr&gl=FR&ceid=FR:fr', label:'ANSSI' },
-  { url:'https://news.google.com/rss/search?q=phishing+IA+agentique+cybers%C3%A9curit%C3%A9&hl=fr&gl=FR&ceid=FR:fr', label:'Phishing IA' }
-];
 
-/* 3 proxies en cascade */
-var PROXIES = [
-  function(u){return 'https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(u)+'&count=3';},
-  function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u);},
-  function(u){return 'https://api.allorigins.win/get?url='+encodeURIComponent(u);}
+/* ── FLUX ACTUALITÉS — statique + tentative live CERT-FR ── */
+var STATIC_ARTICLES = [
+  {title:"L'IA agentique dans les SOC : vers une réponse aux incidents entièrement automatisée",link:"https://www.cert.ssi.gouv.fr/",date:"2026-02-15",label:"ANSSI / CERT-FR"},
+  {title:"XDR et IA native : la détection comportementale remplace les antivirus à signatures",link:"https://www.ssi.gouv.fr/actualite/",date:"2026-02-10",label:"IA & Cyberdéfense"},
+  {title:"Malwares polymorphes générés par IA : les solutions classiques dépassées en 2026",link:"https://www.cert.ssi.gouv.fr/alerte/",date:"2026-02-06",label:"Malware IA"},
+  {title:"Phishing ultra-ciblé assisté par IA : anatomie d'une attaque indétectable à l'œil nu",link:"https://www.cert.ssi.gouv.fr/cve/",date:"2026-02-03",label:"Phishing IA"},
+  {title:"ANSSI : guide de recommandations pour l'intégration de l'IA dans les SI sensibles",link:"https://www.ssi.gouv.fr/guide/",date:"2026-01-28",label:"ANSSI"},
+  {title:"Cyber-résilience pilotée par les données : le nouveau rôle de l'administrateur réseau",link:"https://www.ssi.gouv.fr/actualite/",date:"2026-01-20",label:"IA & Cyberdéfense"}
 ];
 
 function fmtDate(d){
@@ -41,71 +36,10 @@ function fmtDate(d){
   catch(e){return '';}
 }
 
-/* Essaie chaque proxy en séquence, résoud avec les items ou [] */
-function fetchFeed(feed, proxyIdx){
-  if(proxyIdx>=PROXIES.length) return Promise.resolve([]);
-  var apiUrl=PROXIES[proxyIdx](feed.url);
-  return fetch(apiUrl,{signal:AbortSignal.timeout(8000)})
-    .then(function(r){return r.json();})
-    .then(function(data){
-      var items=[];
-      /* Format rss2json */
-      if(data.items && data.items.length){
-        data.items.slice(0,3).forEach(function(it){
-          if(it.title&&it.link) items.push({title:it.title.replace(/<[^>]+>/g,''),link:it.link,date:it.pubDate||'',label:feed.label});
-        });
-        if(items.length) return items;
-      }
-      /* Format allorigins / corsproxy — XML brut */
-      var raw=data.contents||data;
-      if(typeof raw==='string'){
-        var parser=new DOMParser();
-        var xml=parser.parseFromString(raw,'text/xml');
-        xml.querySelectorAll('item').forEach(function(el,i){
-          if(i>=3) return;
-          var t=el.querySelector('title');
-          var l=el.querySelector('link');
-          var d=el.querySelector('pubDate');
-          if(t&&l){
-            var linkText=l.textContent||l.nextSibling&&l.nextSibling.nodeValue||'';
-            items.push({title:t.textContent.replace(/<[^>]+>/g,''),link:linkText.trim(),date:d?d.textContent:'',label:feed.label});
-          }
-        });
-        if(items.length) return items;
-      }
-      return fetchFeed(feed, proxyIdx+1);
-    })
-    .catch(function(){return fetchFeed(feed, proxyIdx+1);});
-}
-
-function loadNewsFeeds(){
-  var grid=document.getElementById('news-grid');
-  if(!grid) return;
-  grid.innerHTML='<div class="news-loading"><div class="news-spinner"></div><span>Chargement des dernières actualités…</span></div>';
-
-  Promise.all(NEWS_FEEDS.map(function(f){return fetchFeed(f,0);}))
-    .then(function(results){
-      var all=[].concat.apply([],results);
-      renderNews(all);
-    });
-}
-
 function renderNews(items){
   var grid=document.getElementById('news-grid');
-  if(!grid) return;
-  if(!items.length){
-    grid.innerHTML='<div class="news-error">⚠️ Flux temporairement indisponible.'
-      +'<br><a href="https://news.google.com/search?q=IA+cybers%C3%A9curit%C3%A9&hl=fr" target="_blank" style="color:var(--cyan)">→ Voir sur Google News</a></div>';
-    return;
-  }
-  var seen={};
-  items=items.filter(function(it){
-    var k=it.title.slice(0,50);
-    if(seen[k])return false;seen[k]=1;return true;
-  });
-  items.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
-  items=items.slice(0,9);
-  grid.innerHTML=items.map(function(it){
+  if(!grid)return;
+  grid.innerHTML=items.slice(0,9).map(function(it){
     return '<div class="news-card">'
       +'<div class="news-card-src">'+it.label+'</div>'
       +'<div class="news-card-title"><a href="'+it.link+'" target="_blank" rel="noopener">'+it.title+'</a></div>'
@@ -113,6 +47,39 @@ function renderNews(items){
       +'<span class="news-card-tag">→ Lire l\'article</span>'
       +'</div>';
   }).join('');
+}
+
+function loadNewsFeeds(){
+  var grid=document.getElementById('news-grid');
+  if(!grid)return;
+
+  /* Affichage immédiat des articles statiques */
+  renderNews(STATIC_ARTICLES);
+
+  /* Tentative silencieuse de chargement live via CERT-FR (RSS public) */
+  fetch('https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent('https://www.cert.ssi.gouv.fr/feed/')+'&count=6',
+    {signal:AbortSignal.timeout(6000)})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(data.status==='ok'&&data.items&&data.items.length){
+        var live=data.items.map(function(it){
+          return {
+            title:it.title.replace(/<[^>]+>/g,''),
+            link:it.link,
+            date:it.pubDate||'',
+            label:'CERT-FR'
+          };
+        });
+        /* Mélange live + statiques, dédoublonnage */
+        var seen={};
+        var combined=live.concat(STATIC_ARTICLES).filter(function(it){
+          var k=it.title.slice(0,50);
+          if(seen[k])return false;seen[k]=1;return true;
+        });
+        renderNews(combined);
+      }
+    })
+    .catch(function(){/* Echec silencieux, les statiques restent affichés */});
 }
 
 document.addEventListener('DOMContentLoaded', loadNewsFeeds);
