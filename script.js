@@ -22,22 +22,33 @@ var secs=document.querySelectorAll('section[id]');
 var nls=document.querySelectorAll('.nav-links a');
 addEventListener('scroll',function(){var sy=scrollY;secs.forEach(function(s){if(sy>=s.offsetTop-80&&sy<s.offsetTop-80+s.offsetHeight){nls.forEach(function(a){a.classList.remove('active');});var a=document.querySelector('.nav-links a[href="#'+s.id+'"]');if(a)a.classList.add('active');}});});
 /* ── LIVE NEWS FEED ── */
-var NEWS_QUERIES = [
-  {q:'IA+cybersécurité+XDR+détection',label:'IA & Cyberdéfense'},
-  {q:'malware+polymorphe+intelligence+artificielle',label:'Malware IA'},
-  {q:'ANSSI+intelligence+artificielle+sécurité',label:'ANSSI'},
-  {q:'phishing+IA+agentique+cybersécurité',label:'Phishing IA'}
+var NEWS_FEEDS = [
+  {
+    url:'https://news.google.com/rss/search?q=IA+cybersécurité+XDR+détection&hl=fr&gl=FR&ceid=FR:fr',
+    label:'IA & Cyberdéfense'
+  },
+  {
+    url:'https://news.google.com/rss/search?q=malware+polymorphe+intelligence+artificielle&hl=fr&gl=FR&ceid=FR:fr',
+    label:'Malware IA'
+  },
+  {
+    url:'https://news.google.com/rss/search?q=ANSSI+cybersécurité+2025+2026&hl=fr&gl=FR&ceid=FR:fr',
+    label:'ANSSI'
+  },
+  {
+    url:'https://news.google.com/rss/search?q=phishing+IA+agentique+cybersécurité&hl=fr&gl=FR&ceid=FR:fr',
+    label:'Phishing IA'
+  }
 ];
+
+var RSS2JSON = 'https://api.rss2json.com/v1/api.json?rss_url=';
 
 function fmtDate(d){
   try{
     var dt=new Date(d);
+    if(isNaN(dt))return '';
     return dt.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
   }catch(e){return '';}
-}
-
-function stripHtml(h){
-  var t=document.createElement('div');t.innerHTML=h;return t.textContent||t.innerText||'';
 }
 
 function loadNewsFeeds(){
@@ -46,57 +57,51 @@ function loadNewsFeeds(){
   grid.innerHTML='<div class="news-loading"><div class="news-spinner"></div><span>Chargement des dernières actualités…</span></div>';
 
   var allItems=[];
-  var pending=NEWS_QUERIES.length;
+  var pending=NEWS_FEEDS.length;
 
-  NEWS_QUERIES.forEach(function(q){
-    var rssUrl='https://news.google.com/rss/search?q='+q.q+'&hl=fr&gl=FR&ceid=FR:fr';
-    var proxy='https://api.allorigins.win/get?url='+encodeURIComponent(rssUrl);
-    fetch(proxy,{signal:AbortSignal.timeout(8000)})
+  NEWS_FEEDS.forEach(function(feed){
+    var apiUrl=RSS2JSON+encodeURIComponent(feed.url)+'&count=3';
+    fetch(apiUrl,{signal:AbortSignal.timeout(10000)})
       .then(function(r){return r.json();})
       .then(function(data){
-        var parser=new DOMParser();
-        var xml=parser.parseFromString(data.contents,'text/xml');
-        var items=xml.querySelectorAll('item');
-        items.forEach(function(item,i){
-          if(i>=3)return;
-          var title=item.querySelector('title')?.textContent||'';
-          var link=item.querySelector('link')?.textContent||'';
-          var pubDate=item.querySelector('pubDate')?.textContent||'';
-          if(title&&link){
-            allItems.push({title:stripHtml(title),link:link,date:pubDate,label:q.label});
-          }
-        });
+        if(data.status==='ok' && data.items){
+          data.items.slice(0,3).forEach(function(item){
+            if(item.title && item.link){
+              allItems.push({
+                title:item.title.replace(/<[^>]+>/g,''),
+                link:item.link,
+                date:item.pubDate||'',
+                label:feed.label
+              });
+            }
+          });
+        }
       })
       .catch(function(){})
       .finally(function(){
         pending--;
-        if(pending===0)renderNews(allItems);
+        if(pending===0) renderNews(allItems);
       });
   });
 
-  // Fallback si tout échoue après 10s
-  setTimeout(function(){
-    if(pending>0){pending=0;renderNews(allItems);}
-  },10000);
+  setTimeout(function(){if(pending>0){pending=0;renderNews(allItems);}},12000);
 }
 
 function renderNews(items){
   var grid=document.getElementById('news-grid');
   if(!grid)return;
   if(!items.length){
-    grid.innerHTML='<div class="news-error">⚠️ Impossible de charger les actualités.<br>Vérifiez votre connexion ou réessayez plus tard.</div>';
+    grid.innerHTML='<div class="news-error">⚠️ Flux temporairement indisponible.<br>'
+      +'<a href="https://news.google.com/search?q=IA+cybersécurité&hl=fr" target="_blank" style="color:var(--cyan)">Voir les actualités sur Google News →</a></div>';
     return;
   }
-  // Dédoublonner par titre
   var seen={};
   items=items.filter(function(it){
-    var k=it.title.slice(0,40);
+    var k=it.title.slice(0,50);
     if(seen[k])return false;
     seen[k]=1;return true;
   });
-  // Trier par date décroissante
   items.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
-  // Limiter à 9
   items=items.slice(0,9);
 
   grid.innerHTML=items.map(function(it){
@@ -109,5 +114,4 @@ function renderNews(items){
   }).join('');
 }
 
-// Auto-load au chargement de la page
 document.addEventListener('DOMContentLoaded',loadNewsFeeds);
