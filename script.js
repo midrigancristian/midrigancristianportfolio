@@ -21,89 +21,90 @@ function submitForm(e){e.preventDefault();var b=e.target.querySelector('.c-sbtn'
 var secs=document.querySelectorAll('section[id]');
 var nls=document.querySelectorAll('.nav-links a');
 addEventListener('scroll',function(){var sy=scrollY;secs.forEach(function(s){if(sy>=s.offsetTop-80&&sy<s.offsetTop-80+s.offsetHeight){nls.forEach(function(a){a.classList.remove('active');});var a=document.querySelector('.nav-links a[href="#'+s.id+'"]');if(a)a.classList.add('active');}});});
-/* ── LIVE NEWS FEED ── */
+/* ── LIVE NEWS FEED — multi-proxy GitHub Pages compatible ── */
 var NEWS_FEEDS = [
-  {
-    url:'https://news.google.com/rss/search?q=IA+cybersécurité+XDR+détection&hl=fr&gl=FR&ceid=FR:fr',
-    label:'IA & Cyberdéfense'
-  },
-  {
-    url:'https://news.google.com/rss/search?q=malware+polymorphe+intelligence+artificielle&hl=fr&gl=FR&ceid=FR:fr',
-    label:'Malware IA'
-  },
-  {
-    url:'https://news.google.com/rss/search?q=ANSSI+cybersécurité+2025+2026&hl=fr&gl=FR&ceid=FR:fr',
-    label:'ANSSI'
-  },
-  {
-    url:'https://news.google.com/rss/search?q=phishing+IA+agentique+cybersécurité&hl=fr&gl=FR&ceid=FR:fr',
-    label:'Phishing IA'
-  }
+  { url:'https://news.google.com/rss/search?q=IA+cybers%C3%A9curit%C3%A9+XDR+d%C3%A9tection&hl=fr&gl=FR&ceid=FR:fr', label:'IA & Cyberdéfense' },
+  { url:'https://news.google.com/rss/search?q=malware+polymorphe+intelligence+artificielle&hl=fr&gl=FR&ceid=FR:fr', label:'Malware IA' },
+  { url:'https://news.google.com/rss/search?q=ANSSI+cybers%C3%A9curit%C3%A9+2026&hl=fr&gl=FR&ceid=FR:fr', label:'ANSSI' },
+  { url:'https://news.google.com/rss/search?q=phishing+IA+agentique+cybers%C3%A9curit%C3%A9&hl=fr&gl=FR&ceid=FR:fr', label:'Phishing IA' }
 ];
 
-var RSS2JSON = 'https://api.rss2json.com/v1/api.json?rss_url=';
+/* 3 proxies en cascade */
+var PROXIES = [
+  function(u){return 'https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(u)+'&count=3';},
+  function(u){return 'https://corsproxy.io/?'+encodeURIComponent(u);},
+  function(u){return 'https://api.allorigins.win/get?url='+encodeURIComponent(u);}
+];
 
 function fmtDate(d){
-  try{
-    var dt=new Date(d);
-    if(isNaN(dt))return '';
-    return dt.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});
-  }catch(e){return '';}
+  try{var dt=new Date(d);if(isNaN(dt))return '';return dt.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'});}
+  catch(e){return '';}
+}
+
+/* Essaie chaque proxy en séquence, résoud avec les items ou [] */
+function fetchFeed(feed, proxyIdx){
+  if(proxyIdx>=PROXIES.length) return Promise.resolve([]);
+  var apiUrl=PROXIES[proxyIdx](feed.url);
+  return fetch(apiUrl,{signal:AbortSignal.timeout(8000)})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var items=[];
+      /* Format rss2json */
+      if(data.items && data.items.length){
+        data.items.slice(0,3).forEach(function(it){
+          if(it.title&&it.link) items.push({title:it.title.replace(/<[^>]+>/g,''),link:it.link,date:it.pubDate||'',label:feed.label});
+        });
+        if(items.length) return items;
+      }
+      /* Format allorigins / corsproxy — XML brut */
+      var raw=data.contents||data;
+      if(typeof raw==='string'){
+        var parser=new DOMParser();
+        var xml=parser.parseFromString(raw,'text/xml');
+        xml.querySelectorAll('item').forEach(function(el,i){
+          if(i>=3) return;
+          var t=el.querySelector('title');
+          var l=el.querySelector('link');
+          var d=el.querySelector('pubDate');
+          if(t&&l){
+            var linkText=l.textContent||l.nextSibling&&l.nextSibling.nodeValue||'';
+            items.push({title:t.textContent.replace(/<[^>]+>/g,''),link:linkText.trim(),date:d?d.textContent:'',label:feed.label});
+          }
+        });
+        if(items.length) return items;
+      }
+      return fetchFeed(feed, proxyIdx+1);
+    })
+    .catch(function(){return fetchFeed(feed, proxyIdx+1);});
 }
 
 function loadNewsFeeds(){
   var grid=document.getElementById('news-grid');
-  if(!grid)return;
+  if(!grid) return;
   grid.innerHTML='<div class="news-loading"><div class="news-spinner"></div><span>Chargement des dernières actualités…</span></div>';
 
-  var allItems=[];
-  var pending=NEWS_FEEDS.length;
-
-  NEWS_FEEDS.forEach(function(feed){
-    var apiUrl=RSS2JSON+encodeURIComponent(feed.url)+'&count=3';
-    fetch(apiUrl,{signal:AbortSignal.timeout(10000)})
-      .then(function(r){return r.json();})
-      .then(function(data){
-        if(data.status==='ok' && data.items){
-          data.items.slice(0,3).forEach(function(item){
-            if(item.title && item.link){
-              allItems.push({
-                title:item.title.replace(/<[^>]+>/g,''),
-                link:item.link,
-                date:item.pubDate||'',
-                label:feed.label
-              });
-            }
-          });
-        }
-      })
-      .catch(function(){})
-      .finally(function(){
-        pending--;
-        if(pending===0) renderNews(allItems);
-      });
-  });
-
-  setTimeout(function(){if(pending>0){pending=0;renderNews(allItems);}},12000);
+  Promise.all(NEWS_FEEDS.map(function(f){return fetchFeed(f,0);}))
+    .then(function(results){
+      var all=[].concat.apply([],results);
+      renderNews(all);
+    });
 }
 
 function renderNews(items){
   var grid=document.getElementById('news-grid');
-  if(!grid)return;
+  if(!grid) return;
   if(!items.length){
-    grid.innerHTML='<div class="news-error">⚠️ Flux temporairement indisponible.<br>'
-      +'<a href="https://news.google.com/search?q=IA+cybersécurité&hl=fr" target="_blank" style="color:var(--cyan)">Voir les actualités sur Google News →</a></div>';
+    grid.innerHTML='<div class="news-error">⚠️ Flux temporairement indisponible.'
+      +'<br><a href="https://news.google.com/search?q=IA+cybers%C3%A9curit%C3%A9&hl=fr" target="_blank" style="color:var(--cyan)">→ Voir sur Google News</a></div>';
     return;
   }
   var seen={};
   items=items.filter(function(it){
     var k=it.title.slice(0,50);
-    if(seen[k])return false;
-    seen[k]=1;return true;
+    if(seen[k])return false;seen[k]=1;return true;
   });
   items.sort(function(a,b){return new Date(b.date)-new Date(a.date);});
   items=items.slice(0,9);
-
   grid.innerHTML=items.map(function(it){
     return '<div class="news-card">'
       +'<div class="news-card-src">'+it.label+'</div>'
@@ -114,4 +115,4 @@ function renderNews(items){
   }).join('');
 }
 
-document.addEventListener('DOMContentLoaded',loadNewsFeeds);
+document.addEventListener('DOMContentLoaded', loadNewsFeeds);
