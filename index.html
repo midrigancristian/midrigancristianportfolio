@@ -72,22 +72,29 @@
   <div class="wrap">
     <div class="sec-head"><span class="sec-num">02</span><h2 class="sec-title">Compétences Techniques</h2><div class="sec-line"></div></div>
     <div class="skills-layout">
-      <div class="orb-wrap" id="orbWrap">
-        <div class="orb-ring" id="orbRing1"></div>
-        <div class="orb-ring" id="orbRing2"></div>
+      <!-- ORBITAL 100% CSS — aucun JS requis -->
+      <div class="orb-wrap">
+        <!-- Rings décoratifs -->
+        <div class="orb-ring orb-ring-1"></div>
+        <div class="orb-ring orb-ring-2"></div>
+        <!-- Centre -->
         <div class="orb-center"><span>⚡</span><p>SKILLS</p></div>
-        <div class="orb-node" data-ring="1" data-idx="0" data-total="5"><div class="orb-node-in"><span class="ni">🌐</span><p class="nl">Réseaux</p></div></div>
-        <div class="orb-node" data-ring="1" data-idx="1" data-total="5"><div class="orb-node-in"><span class="ni">🖥️</span><p class="nl">Win Server</p></div></div>
-        <div class="orb-node" data-ring="1" data-idx="2" data-total="5"><div class="orb-node-in"><span class="ni">🐧</span><p class="nl">Linux</p></div></div>
-        <div class="orb-node" data-ring="1" data-idx="3" data-total="5"><div class="orb-node-in"><span class="ni">🔒</span><p class="nl">Sécurité</p></div></div>
-        <div class="orb-node" data-ring="1" data-idx="4" data-total="5"><div class="orb-node-in"><span class="ni">⚡</span><p class="nl">Virtualisation</p></div></div>
-        <div class="orb-node" data-ring="2" data-idx="0" data-total="7"><div class="orb-node-in"><span class="ni">📡</span><p class="nl">Cisco VLAN</p></div></div>
-        <div class="orb-node" data-ring="2" data-idx="1" data-total="7"><div class="orb-node-in"><span class="ni">🗂️</span><p class="nl">GLPI ITSM</p></div></div>
-        <div class="orb-node" data-ring="2" data-idx="2" data-total="7"><div class="orb-node-in"><span class="ni">📊</span><p class="nl">Zabbix</p></div></div>
-        <div class="orb-node" data-ring="2" data-idx="3" data-total="7"><div class="orb-node-in"><span class="ni">🔑</span><p class="nl">Active Directory</p></div></div>
-        <div class="orb-node" data-ring="2" data-idx="4" data-total="7"><div class="orb-node-in"><span class="ni">📦</span><p class="nl">Proxmox VMware</p></div></div>
-        <div class="orb-node" data-ring="2" data-idx="5" data-total="7"><div class="orb-node-in"><span class="ni">🛡️</span><p class="nl">GPO Accès</p></div></div>
-        <div class="orb-node" data-ring="2" data-idx="6" data-total="7"><div class="orb-node-in"><span class="ni">📞</span><p class="nl">VoIP SIP</p></div></div>
+
+        <!-- RING 1 — 5 nodes, r=22%, angles: -90, -18, 54, 126, 198 -->
+        <div class="on r1n0"><div class="on-in"><span>🌐</span><p>Réseaux</p></div></div>
+        <div class="on r1n1"><div class="on-in"><span>🖥️</span><p>Win Server</p></div></div>
+        <div class="on r1n2"><div class="on-in"><span>🐧</span><p>Linux</p></div></div>
+        <div class="on r1n3"><div class="on-in"><span>🔒</span><p>Sécurité</p></div></div>
+        <div class="on r1n4"><div class="on-in"><span>⚡</span><p>Virtualisation</p></div></div>
+
+        <!-- RING 2 — 7 nodes, r=41%, angles: -90, -38.6, 12.9, 64.3, 115.7, 167.1, 218.6 -->
+        <div class="on r2n0"><div class="on-in"><span>📡</span><p>Cisco VLAN</p></div></div>
+        <div class="on r2n1"><div class="on-in"><span>🗂️</span><p>GLPI ITSM</p></div></div>
+        <div class="on r2n2"><div class="on-in"><span>📊</span><p>Zabbix</p></div></div>
+        <div class="on r2n3"><div class="on-in"><span>🔑</span><p>Active Dir.</p></div></div>
+        <div class="on r2n4"><div class="on-in"><span>📦</span><p>Proxmox</p></div></div>
+        <div class="on r2n5"><div class="on-in"><span>🛡️</span><p>GPO Accès</p></div></div>
+        <div class="on r2n6"><div class="on-in"><span>📞</span><p>VoIP SIP</p></div></div>
       </div>
       <div class="skill-blocks">
         <div class="sb">
@@ -191,26 +198,79 @@
 <section id="veille" style="background:linear-gradient(180deg,transparent,rgba(0,200,255,.02),transparent)">
   <div class="wrap">
     <div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title">Veille Technologique</h2><div class="sec-line"></div></div>
+
+    <!-- CARTE THÈME PRINCIPAL -->
     <div class="veille-stack">
-      <div class="vc">
-        <div class="vc-head" onclick="toggleV(this)"><div class="vc-icon">🤖</div><div class="vc-txt"><div class="vc-title">IA Générative &amp; Cybermenaces</div><div class="vc-sub">Comment l'IA transforme les attaques… et la défense</div></div><div class="vc-btn">LIRE ▾</div></div>
-        <div class="vc-body">
-          <div class="vs"><div class="vs-title">🔍 Thème surveillé</div><p>Impact de l'IA générative sur la cybersécurité : attaques plus rapides et crédibles (phishing, deepfakes, code malveillant assisté IA) et nouvelles cibles comme les modèles IA eux-mêmes.</p></div>
-          <div class="vs"><div class="vs-title">⚠️ Pourquoi c'est critique en 2025-2026</div><ul class="vl"><li>Phishing "industriel" généré par IA, beaucoup plus réaliste et massif</li><li>Risque d'empoisonnement des modèles (données d'entraînement modifiées) — nouvelle forme d'attaque supply chain</li><li>Explosion des deepfakes qui compliquent la détection et la réponse aux incidents</li><li>Automatisation des scans de vulnérabilités grâce aux LLM</li></ul></div>
-          <div class="vs"><div class="vs-title">💡 Mon angle BTS SIO</div><div class="va">Je m'intéresse à l'IA utilisée à la fois par les attaquants (phishing automatisé, génération de malwares) et par les défenseurs (détection d'anomalies, SOC augmenté).</div></div>
-          <div class="vs"><div class="vs-title">📚 Sources suivies</div><div class="vsrc"><span class="stag">ANSSI</span><span class="stag">CERT-FR</span><span class="stag">The Hacker News</span><span class="stag">Krebs on Security</span><span class="stag">Dark Reading</span></div></div>
+      <details class="vc" open>
+        <summary class="vc-head">
+          <div class="vc-icon">🛡️</div>
+          <div class="vc-txt">
+            <div class="vc-title">IA &amp; Cyberdéfense : vers une protection proactive et autonome</div>
+            <div class="vc-sub">XDR · IA Native · IA Agentique · Détection comportementale · Malwares polymorphes</div>
+          </div>
+          <div class="vc-btn"></div>
+        </summary>
+        <div class="vc-body" style="max-height:none;padding:1.5rem 1.8rem;border-top:1px solid var(--border);">
+
+          <div class="vs">
+            <div class="vs-title">🔍 Thème surveillé</div>
+            <p>L'IA au service de la cyberdéfense : l'évolution vers une protection proactive et autonome. Ce thème englobe les technologies de détection avancées (XDR, IA native) et l'utilisation d'agents IA capables d'analyser les comportements suspects en temps réel pour contrer des menaces de plus en plus complexes comme les malwares polymorphes.</p>
+          </div>
+
+          <div class="vs">
+            <div class="vs-title">⚠️ Pourquoi c'est critique en 2026</div>
+            <ul class="vl">
+              <li><strong style="color:#fff">Réponse automatisée (IA Agentique) :</strong> Face à la rapidité des attaques, l'IA ne se contente plus d'alerter ; elle agit de manière autonome pour isoler les systèmes compromis avant que l'humain n'intervienne.</li>
+              <li><strong style="color:#fff">Détection comportementale vs Signatures :</strong> Les antivirus classiques sont dépassés par les menaces qui changent de forme. L'IA native permet d'identifier une attaque par son comportement plutôt que par son code connu.</li>
+              <li><strong style="color:#fff">Course à l'armement technologique :</strong> Alors que le phishing sophistiqué devient indétectable à l'œil nu, la cyberdéfense doit intégrer l'IA pour analyser les métadonnées et les signaux faibles à une vitesse surhumaine.</li>
+            </ul>
+          </div>
+
+          <div class="vs">
+            <div class="vs-title">💡 Mon angle BTS SIO</div>
+            <div class="va">Dans le cadre de mon parcours, je m'intéresse particulièrement à l'implémentation technique de ces solutions au sein d'un réseau d'entreprise. Mon objectif est de comprendre comment configurer et superviser des outils comme le XDR et de suivre les recommandations de l'ANSSI pour garantir que l'IA reste un outil de confiance. J'étudie comment ces innovations transforment le métier d'administrateur système et réseau, en passant d'une maintenance réactive à une gestion de la cyber-résilience pilotée par les données.</div>
+          </div>
+
+          <div class="vs">
+            <div class="vs-title">📡 Mots-clés surveillés (Google Alerts)</div>
+            <div class="vsrc">
+              <span class="stag">ANSSI AND intelligence artificielle</span>
+              <span class="stag">malware polymorphe</span>
+              <span class="stag">phishing sophistiqué</span>
+              <span class="stag">IA agentique</span>
+              <span class="stag">XDR</span>
+              <span class="stag">IA native</span>
+              <span class="stag">détection comportementale</span>
+              <span class="stag">intelligence artificielle</span>
+            </div>
+          </div>
+
         </div>
+      </details>
+    </div>
+
+    <!-- FLUX ACTUALITÉS LIVE -->
+    <div class="news-section">
+      <div class="news-header">
+        <div class="news-header-left">
+          <span class="news-live-dot"></span>
+          <span class="news-label">// FLUX ACTUALITÉS LIVE</span>
+        </div>
+        <div class="news-sources-row">
+          <span class="stag">ANSSI</span>
+          <span class="stag">CERT-FR</span>
+          <span class="stag">Google News</span>
+        </div>
+        <button class="news-refresh-btn" onclick="loadNewsFeeds()">⟳ Actualiser</button>
       </div>
-      <div class="vc">
-        <div class="vc-head" onclick="toggleV(this)"><div class="vc-icon">☁️</div><div class="vc-txt"><div class="vc-title">Sécurité des Infrastructures Cloud</div><div class="vc-sub">Zero Trust, conteneurs et environnements hybrides</div></div><div class="vc-btn">LIRE ▾</div></div>
-        <div class="vc-body">
-          <div class="vs"><div class="vs-title">🔍 Thème surveillé</div><p>Évolution des architectures cloud et hybrides : adoption massive de conteneurs (Docker, Kubernetes), modèle Zero Trust, et sécurisation des accès distants dans des environnements distribués.</p></div>
-          <div class="vs"><div class="vs-title">⚠️ Enjeux actuels</div><ul class="vl"><li>Mauvaises configurations cloud comme première cause de fuites de données</li><li>Surface d'attaque élargie avec la multiplication des conteneurs et microservices</li><li>Migration vers Zero Trust pour remplacer les VPN traditionnels jugés insuffisants</li></ul></div>
-          <div class="vs"><div class="vs-title">💡 Mon angle BTS SIO</div><div class="va">J'expérimente ces concepts dans mon HomeLab (Proxmox + segmentation réseau). Cette veille me prépare à administrer des SI hybrides.</div></div>
-          <div class="vs"><div class="vs-title">📚 Sources suivies</div><div class="vsrc"><span class="stag">NIST</span><span class="stag">CIS Benchmarks</span><span class="stag">AWS Security Blog</span><span class="stag">CISA Alerts</span></div></div>
+      <div id="news-grid" class="news-grid">
+        <div class="news-loading">
+          <div class="news-spinner"></div>
+          <span>Chargement des dernières actualités…</span>
         </div>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -222,7 +282,7 @@
       <div>
         <p style="color:var(--text);margin-bottom:2rem">Vous souhaitez discuter d'une opportunité, d'un projet ou simplement échanger sur l'IT ? N'hésitez pas !</p>
         <div class="c-items">
-          <a href="mailto:midrigancristi@gmail.com" class="c-item"><span class="c-ico">✉️</span><div><span class="c-lbl">EMAIL</span><span class="c-val">midrigancristi@gmail.com</span></div></a>
+          <a href="/cdn-cgi/l/email-protection#acc1c5c8dec5cbcdc2cfdec5dfd8c5eccbc1cdc5c082cfc3c1" class="c-item"><span class="c-ico">✉️</span><div><span class="c-lbl">EMAIL</span><span class="c-val"><span class="__cf_email__" data-cfemail="2e43474a5c47494f404d5c475d5a476e49434f4742004d4143">[email&#160;protected]</span></span></div></a>
           <a href="https://www.linkedin.com/in/cristian-midrigan/" target="_blank" class="c-item"><span class="c-ico">💼</span><div><span class="c-lbl">LINKEDIN</span><span class="c-val">linkedin.com/in/cristian-midrigan</span></div></a>
           <a href="https://github.com/midrigancristian/" target="_blank" class="c-item"><span class="c-ico">🐙</span><div><span class="c-lbl">GITHUB</span><span class="c-val">github.com/midrigancristian</span></div></a>
           <div class="c-item"><span class="c-ico">📍</span><div><span class="c-lbl">LOCALISATION</span><span class="c-val">Île-de-France, France</span></div></div>
@@ -242,9 +302,4 @@
 </section>
 
 <footer>
-  <div class="fi"><span>MIDRIGAN Cristian</span> &nbsp;·&nbsp; BTS SIO SISR &nbsp;·&nbsp; Mairie de Vigneux-sur-Seine &nbsp;·&nbsp; 2025–2026</div>
-</footer>
-
-<script src="script.js"></script>
-</body>
-</html>
+  <div class="fi"><span>MIDRIGAN Cristian</span> &nbsp;·&nbsp; BTS S
